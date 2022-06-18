@@ -64,7 +64,10 @@ async def next_page(bot, query):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"↾{get_size(file.file_size)}↿ {file.file_name}", url=f'https://t.me/{temp.U_NAME}?start=files_{file.file_id}'
+                    text=f"{file.file_name}", url=f'https://t.me/{temp.U_NAME}?start=files_{file.file_id}'
+                ),
+            [   InlineKeyboardButton (
+                    text=f"𝗠𝗕 : {get_size(file.file_size)}", url=f'https://t.me/{temp.U_NAME}?start=files_{file.file_id}'
                 ),
             ]
             for file in files
