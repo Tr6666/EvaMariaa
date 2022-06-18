@@ -64,7 +64,7 @@ async def next_page(bot, query):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}] {file.file_name}", url=f'https://t.me/{temp.U_NAME}?start={ident}_{file_id}'
+                    text=f"[{get_size(file.file_size)}] {file.file_name}", url=f'https://t.me/{temp.U_NAME}?start={pre}_{file_id}'
                 ),
             ]
             for file in files
@@ -73,11 +73,11 @@ async def next_page(bot, query):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"{file.file_name}", url=f'https://t.me/{temp.U_NAME}?start={ident}_{file_id}'
+                    text=f"{file.file_name}", url=f'https://t.me/{temp.U_NAME}?start={pre}_{file_id}'
                 ),
                 InlineKeyboardButton(
                     text=f"{get_size(file.file_size)}",
-                    url=f'https://t.me/{temp.U_NAME}?start={ident}_{file_id}',
+                    url=f'https://t.me/{temp.U_NAME}?start={pre}_{file_id}',
                 ),
             ]
             for file in files
