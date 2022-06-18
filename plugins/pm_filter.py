@@ -75,7 +75,6 @@ async def next_page(bot, query):
                 InlineKeyboardButton(
                     text=f"{file.file_name}", url=f'https://t.me/{temp.U_NAME}?start=files_{file.file_id}'
                 ),
-            [
                 InlineKeyboardButton(
                     text=f"{get_size(file.file_size)}",
                     url=f'https://t.me/{temp.U_NAME}?start=files_{file.file_id}',
@@ -654,7 +653,6 @@ async def auto_filter(client, msg, spoll=False):
                     text=f"{file.file_name}",
                     url=f'https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}',
                 ),
-            [
                 InlineKeyboardButton(
                     text=f"{get_size(file.file_size)}",
                     url=f'https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}',
