@@ -68,11 +68,6 @@ async def next_page(bot, query):
                 ),
             ]
             for file in files
-            [
-                InlineKeyboardButton(
-                    text=f"📥 HOW TO DOWNLOAD 📥", url=f'https://t.me/Tamil_Roars/18'
-                ),
-            ]
         ]
     else:
         btn = [
@@ -650,12 +645,7 @@ async def auto_filter(client, msg, spoll=False):
                 ),
             ]
             for file in files
-            [
-                InlineKeyboardButton(
-                    text=f"📥 HOW TO DOWNLOAD 📥", url=f'https://t.me/Tamil_Roars/18'
-                ),
-            ]
-        ]
+         ]
     else:
         btn = [
             [
