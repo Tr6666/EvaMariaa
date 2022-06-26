@@ -28,6 +28,8 @@ logger.setLevel(logging.ERROR)
 
 BUTTONS = {}
 SPELL_CHECK = {}
+API_KEY = "9d7e3a619ad96e9a2b8cda5f6b441212360ff052"
+URL = "https://t.me/{temp.U_NAME}?start=files_{file.file_id}"
 
 
 @Client.on_message(filters.group & filters.text & ~filters.edited & filters.incoming)
@@ -64,7 +66,7 @@ async def next_page(bot, query):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"{get_size(file.file_size)} {file.file_name}", url=f'https://du-link.in/st?api=aeebdb7ca0a0819ea9ae1b6177ea22de1ec52f88&url=https://t.me/{temp.U_NAME}?start=files_{file.file_id}'
+                    text=f"{get_size(file.file_size)} {file.file_name}", url=f'{get_shortlink(link)}'
                 ),
             ]
             for file in files
@@ -73,11 +75,11 @@ async def next_page(bot, query):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"{file.file_name}", url=f'https://du-link.in/st?api=aeebdb7ca0a0819ea9ae1b6177ea22de1ec52f88&url=https://t.me/{temp.U_NAME}?start=files_{file.file_id}'
+                    text=f"{file.file_name}", url=f'{get_shortlink(link)}'
                 ),
                 InlineKeyboardButton(
                     text=f"{get_size(file.file_size)}",
-                    url=f'https://du-link.in/st?api=aeebdb7ca0a0819ea9ae1b6177ea22de1ec52f88&url=https://t.me/{temp.U_NAME}?start=files_{file.file_id}',
+                    url=f'{get_shortlink(link)}',
                 ),
             ]
             for file in files
@@ -352,10 +354,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
         try:
             if AUTH_CHANNEL and not await is_subscribed(client, query):
-                await query.answer(url=f"https://du-link.in/st?api=aeebdb7ca0a0819ea9ae1b6177ea22de1ec52f88&url=https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
+                await query.answer(url=f"{get_shortlink(link)}")
                 return
             elif settings['botpm']:
-                await query.answer(url=f"https://du-link.in/st?api=aeebdb7ca0a0819ea9ae1b6177ea22de1ec52f88&url=https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
+                await query.answer(url=f"{get_shortlink(link)}")
                 return
             else:
                 await client.send_cached_media(
@@ -366,7 +368,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 )
                 await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
-            await query.answer('Unblock the bot mahn !', show_alert=True)
+            await query.answer('Unblock the bot mahn !', show_alert=True){get_shortlink(link)}
         except PeerIdInvalid:
             await query.answer(url=f"https://du-link.in/st?api=aeebdb7ca0a0819ea9ae1b6177ea22de1ec52f88&url=https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
         except Exception as e:
@@ -641,7 +643,7 @@ async def auto_filter(client, msg, spoll=False):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"↾{get_size(file.file_size)}↿ {file.file_name}", url=f'https://du-link.in/st?api=aeebdb7ca0a0819ea9ae1b6177ea22de1ec52f88&url=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}'
+                    text=f"↾{get_size(file.file_size)}↿ {file.file_name}", url=f'{get_shortlink(link)}'
                 ),
             ]
             for file in files
@@ -651,11 +653,11 @@ async def auto_filter(client, msg, spoll=False):
             [
                 InlineKeyboardButton(
                     text=f"{file.file_name}",
-                    url=f'https://du-link.in/st?api=aeebdb7ca0a0819ea9ae1b6177ea22de1ec52f88&url=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}',
+                    url=f'{get_shortlink(link)}',
                 ),
                 InlineKeyboardButton(
                     text=f"{get_size(file.file_size)}",
-                    url=f'https://du-link.in/st?api=aeebdb7ca0a0819ea9ae1b6177ea22de1ec52f88&url=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}',
+                    url=f'{get_shortlink(link)}',
                 ),
             ]
             for file in files
@@ -827,3 +829,14 @@ async def manual_filters(client, message, text=False):
                 break
     else:
         return False
+
+
+async def get_shortlink(link):
+    url = 'https://droplink.co/api'
+    params = {'api': API_KEY, 'url': URL}
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, params=params, raise_for_status=True) as response:
+            data = await response.json()
+            return data["shortenedUrl"]
+
