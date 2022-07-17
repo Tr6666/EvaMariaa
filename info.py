@@ -66,3 +66,4 @@ LOG_STR += f"Your current IMDB template is {IMDB_TEMPLATE}"
 
 #Custom Repo
 WEBSITE = environ.get('WEBSITE', "droplink.co")
+API = environ.get('API', '1234')
